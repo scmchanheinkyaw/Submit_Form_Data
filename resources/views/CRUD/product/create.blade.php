@@ -1,0 +1,50 @@
+@extends('layout.app')
+@section('title','Category')
+@section('content')
+<div class="py-4">
+  <div class="d-flex justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title mb-4">
+              <h3>Create Product</h3>
+            </div>
+              <form action="{{ route('product.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                  @csrf
+                  <div class="md-form">
+                      <label for="">Name</label>
+                      <input type="text" name="name" class="form-control @error('name') is-invalid @enderror">
+                      @error('name')
+                      <span class="invalid-feedback">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                      @enderror
+                  </div>
+                  <br>
+                  <div class="md-form">
+                    <label for="">Category</label>
+                    <select name="category[]" class="form-control @error('name') is-invalid @enderror" multiple>
+                        @foreach ($categories as $category)
+                          <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('category')
+                    <span class="invalid-feedback">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+        
+                  <div class="d-flex text-right mt-5 mb-3">
+                      <div class="col-md-12">
+                        <a href="{{ route('product.index') }}" class="btn btn-primary">Back</a>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+@endsection
